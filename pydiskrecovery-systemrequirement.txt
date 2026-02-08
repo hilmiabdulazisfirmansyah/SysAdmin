@@ -1,0 +1,83 @@
+## **Requirements.txt:**
+```txt
+# Untuk versi Windows (opsional)
+# pywin32==306
+
+# Untuk semua platform
+argparse==1.4.0
+```
+
+## **Cara Menggunakan:**
+
+### **1. Di Linux:**
+```bash
+# Install dependencies
+pip install argparse
+
+# Analisis disk (butuh sudo)
+sudo python pydiskrecovery.py --disk /dev/sda --analyze
+
+# Cari partisi hilang
+sudo python pydiskrecovery.py --disk /dev/sda --search
+
+# Recover file (sederhana)
+sudo python pydiskrecovery.py --disk /dev/sda --recover-files --output recovered_files/
+```
+
+### **2. Di Windows (Run as Administrator):**
+```powershell
+# Analisis PhysicalDrive0
+python pydiskrecovery.py --disk \\.\PhysicalDrive0 --analyze
+
+# Atau gunakan file image
+python pydiskrecovery.py --image C:\backup\disk.img --search
+```
+
+### **3. Dengan file disk image:**
+```bash
+python pydiskrecovery.py --image corrupted_disk.img --analyze --search
+```
+
+## **Fitur yang Diimplementasikan:**
+
+### **✅ Sudah Ada:**
+1. **MBR Parser** - Baca dan parse Master Boot Record
+2. **Partition Type Detection** - Deteksi tipe partisi (NTFS, FAT, dll)
+3. **Lost Partition Scanner** - Cari partisi hilang berdasarkan signature
+4. **Basic File Recovery** - Recover file berdasarkan signature (JPG, PDF, ZIP, dll)
+5. **Disk Imaging** - Buat image dari range sector tertentu
+6. **Cross-platform** - Bekerja di Windows, Linux, Mac
+
+### **❌ Belum (Butuh Pengembangan):**
+1. **GPT Support** - Hanya MBR saat ini
+2. **NTFS MFT Parser** - Parsing lengkap struktur file NTFS
+3. **FAT Table Parser** - Reading FAT12/16/32 tables
+4. **File Carving Advanced** - Carving file terfragmentasi
+5. **GUI Interface** - Hanya command line
+
+## **Batasan dan Peringatan:**
+
+1. **READ-ONLY** - Tools ini hanya membaca, tidak menulis ke disk
+2. **Edukasional** - Untuk pembelajaran struktur disk
+3. **Tidak Lengkap** - Banyak fitur recovery yang belum diimplementasi
+4. **Butuh Privilege** - Harus run sebagai admin/root
+5. **Risk of Data Loss** - Selalu backup sebelum mencoba
+
+## **Untuk Pengembangan Lebih Lanjut:**
+
+Jika ingin mengembangkan lebih jauh, pertimbangkan:
+
+1. Tambahkan parser untuk:
+   - **GPT partition table**
+   - **NTFS $MFT dan $BITMAP**
+   - **FAT12/16/32 file allocation tables**
+
+2. Implementasikan:
+   - **File carving algorithms**
+   - **RAW recovery based on file signatures**
+   - **Journal replay untuk NTFS**
+
+3. Tambahkan:
+   - **GUI dengan tkinter/PyQt**
+   - **Progress bars dan logging**
+   - **Hash verification (MD5, SHA1)**
